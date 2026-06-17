@@ -1,14 +1,7 @@
 /* ============================================
    UI.JS — Kanban Board DOM Rendering
    ============================================
-   Purpose: Handles ALL visual updates for the Kanban Board.
-   
-   Renders columns, task cards, modals, and handles
-   user interactions (add, edit, delete).
-   
-   SECURITY: All user input is sanitized with sanitizeHTML()
-   to prevent XSS (Cross-Site Scripting) attacks.
-   ============================================ */
+*/
 
 // sanitizeHTML() - Prevents XSS by escaping HTML special characters
 function sanitizeHTML(rawString) {
