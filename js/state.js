@@ -56,7 +56,33 @@ function updateTask(columnId, taskId, title, description) {
 }
 
 // moveTask() - Moves a task from one column to another
+function moveTask(fromColumn, toColumn, taskId) {
+  // Find the task in the source column
+  let taskToMove = null;
 
+  for (let i = 0; i < boardState[fromColumn].length; i++) {
+    if (boardState[fromColumn][i].id === taskId) {
+      taskToMove = boardState[fromColumn][i];
+      break;
+    }
+  }
+
+  // If task not found, exit
+  if (taskToMove === null) {
+    return;
+  }
+
+  // Remove from source column
+  boardState[fromColumn] = boardState[fromColumn].filter(function (task) {
+    return task.id !== taskId;
+  });
+
+  // Add to destination column
+  boardState[toColumn].push(taskToMove);
+
+  // Save to localStorage
+  saveBoardState(boardState);
+}
 
 
 // findTaskColumn() - Finds which column a task belongs to
