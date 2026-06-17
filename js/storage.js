@@ -1,11 +1,7 @@
 /* ============================================
    STORAGE.JS — Kanban Board localStorage
    ============================================
-   Purpose: Handles reading and writing board state to localStorage.
-   
-   The board state is an object with three arrays:
-   { todo: [...], inprogress: [...], done: [...] }
-   ============================================ */
+*/
 
 // Key used to store board data in localStorage
 const KANBAN_STORAGE_KEY = "kanban-board-state";
