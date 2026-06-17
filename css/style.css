@@ -222,7 +222,7 @@ body {
   font-size: 0.9rem;
 }
 
-/* ----- TASK CARD ----- */
+/* ----- TASK CARD STYLE----- */
 .task-card {
   background-color: var(--color-bg-card);
   border: 1px solid var(--color-border);
