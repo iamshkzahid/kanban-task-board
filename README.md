@@ -1,284 +1,91 @@
 # Kanban Task Board
 
-A responsive **Kanban Task Management Application** built using **HTML, CSS, and JavaScript**. The application helps users organize tasks across different stages of work using a drag-and-drop interface similar to Trello.
-
-Tasks can be created, edited, deleted, and moved between workflow columns, with all data automatically saved in the browser using Local Storage.
-
----
+A kanban-style task management board with drag-and-drop functionality. Built as part of the **OJT Capstone Project — Track A (Dev Agency)**.
 
 ## Features
 
-- Create new tasks
-- Edit existing tasks
-- Delete tasks
-- Drag and drop tasks between columns
-- Three workflow stages:
-  - To Do
-  - In Progress
-  - Done
-- Task title and description support
-- Real-time task counter for each column
-- Local Storage persistence
-- Responsive design for desktop and mobile
-- Dark/Light theme toggle
-- Mobile navigation menu
+- **Three Columns** — To Do, In Progress, Done
+- **Task Cards** — Create, edit, and delete tasks with titles and descriptions
+- **Modal Interface** — Add/edit tasks through a clean modal dialog
+- **Drag and Drop** — Move tasks between columns using HTML5 Drag and Drop API
+- **Mobile Fallback** — Move buttons for touch devices where drag-and-drop isn't reliable
+- **Empty States** — Helpful prompts when columns have no tasks
+- **Persistent Storage** — Tasks saved to localStorage across sessions
+- **XSS Protection** — All user input sanitized before rendering
 
----
+## Component Ownership
 
-## Technologies Used
+This project follows **Track A distributed ownership**:
 
-- HTML5
-- CSS3
-- JavaScript (ES6)
-- Local Storage API
-- Drag & Drop API
+| Component | Owner | Files |
+|---|---|---|
+| **UI Layer** | Member 3 | `index.html`, `css/style.css`, `js/ui.js` |
+| **Logic Layer** | Member 4 | `js/state.js`, `js/storage.js`, `js/dragdrop.js`, `js/main.js` |
 
----
+> **Important:** Member 3 only modifies UI files. Member 4 owns all state management, storage, and drag-and-drop logic.
+
+## Tech Stack
+
+- HTML5 (semantic markup, data attributes)
+- CSS3 (custom properties, grid, flexbox)
+- JavaScript ES6+ (DOM manipulation, event handling)
+- HTML5 Drag and Drop API
+- localStorage for persistence
+
+## Setup
+
+1. Clone this repository:
+   ```bash
+   git clone https://github.com/sauryamanbisen-art/kanban-task-board.git
+   cd kanban-task-board
+   ```
+
+2. Open `index.html` in your browser.
+
+No build tools, dependencies, or API keys required.
 
 ## Project Structure
 
-```text
-kanban-task-board-main/
-│
-├── index.html
-│
+```
+kanban-task-board/
+├── index.html              # Board layout with 3 columns + task modal
 ├── css/
-│   └── style.css
-│
+│   └── style.css           # All styles including responsive (Member 3)
 ├── js/
-│   ├── main.js
-│   ├── state.js
-│   ├── storage.js
-│   ├── dragdrop.js
-│   ├── theme.js
-│   └── ui.js
-│
-├── README.md
-│
-└── .github/
-    ├── ISSUE_TEMPLATE/
-    └── PULL_REQUEST_TEMPLATE.md
+│   ├── ui.js               # DOM rendering: cards, modal, columns (Member 3)
+│   ├── state.js            # Board state management (Member 4)
+│   ├── storage.js          # localStorage read/write (Member 4)
+│   ├── dragdrop.js         # HTML5 drag-and-drop handlers (Member 4)
+│   └── main.js             # App initialization (Member 4)
+├── .gitignore
+├── MERGE_CONFLICT.md
+└── README.md
 ```
 
----
-
-## File Description
-
-### index.html
-Contains the main structure of the application including:
-
-- Navigation bar
-- Kanban board layout
-- Task columns
-- Add Task buttons
-- Task modal for creating and editing tasks
-
----
-
-### style.css
-
-Provides styling for:
-
-- Kanban board layout
-- Task cards
-- Modal windows
-- Buttons
-- Theme support
-- Responsive design
-
----
-
-### main.js
-
-Application entry point.
-
-Responsibilities:
-
-- Initialize board state
-- Render tasks
-- Handle modal interactions
-- Handle add task buttons
-
----
-
-### state.js
-
-Manages application state.
-
-Functions include:
-
-- Add task
-- Edit task
-- Delete task
-- Move task
-- Find task location
-- Update board state
-
----
-
-### storage.js
-
-Handles browser Local Storage operations.
-
-Functions include:
-
-- Save board data
-- Load board data
-- Persist tasks after page refresh
-
----
-
-### dragdrop.js
-
-Implements drag-and-drop functionality.
-
-Features:
-
-- Drag task cards
-- Drop tasks into other columns
-- Update board state automatically
-
----
-
-### ui.js
-
-Responsible for:
-
-- Rendering tasks
-- Updating counters
-- Opening and closing modals
-- Displaying board updates
-
----
-
-### theme.js
-
-Provides:
-
-- Dark mode support
-- Light mode support
-- Theme persistence using Local Storage
-- Mobile menu toggle
-
----
-
-## Workflow
-
-### 1. Add Task
-
-Click the **+** button in any column.
-
-Enter:
-
-- Task Title
-- Task Description
-
-Click **Save**.
-
----
-
-### 2. Edit Task
-
-Select a task and update:
-
-- Title
-- Description
-
-Save changes.
-
----
-
-### 3. Delete Task
-
-Remove unwanted tasks from the board.
-
----
-
-### 4. Move Task
-
-Drag a task card and drop it into another column.
-
-Example:
-
-```text
-To Do → In Progress → Done
-```
-
----
-
-## Data Persistence
-
-All tasks are automatically stored using the browser's Local Storage.
-
-This means:
-
-- Tasks remain available after page refresh
-- No database setup required
-- No backend required
-
----
-
-## How to Run the Project
-
-### Clone Repository
-
-```bash
-git clone https://github.com/your-username/kanban-task-board.git
-```
-
-### Navigate to Project Folder
-
-```bash
-cd kanban-task-board
-```
-
-### Open Application
-
-Open:
-
-```text
-index.html
-```
-
-in any modern web browser.
-
-No installation or dependencies are required.
-
----
-
-## Learning Outcomes
-
-This project demonstrates:
-
-- DOM Manipulation
-- Event Handling
-- Drag and Drop API
-- State Management
-- Local Storage Integration
-- Responsive Web Design
-- Modular JavaScript Architecture
-
----
-
-## Future Enhancements
-
-- Task priorities
-- Due dates
-- Search and filtering
-- Labels and tags
-- User authentication
-- Team collaboration
-- Cloud database integration
-- Activity history
-
----
+## Architecture — UI Layer (Member 3)
+
+| Function | Purpose |
+|---|---|
+| `sanitizeHTML()` | XSS prevention — escapes HTML entities |
+| `renderBoard()` | Renders all three columns and re-attaches drag handlers |
+| `renderColumn()` | Renders a single column with task cards or empty state |
+| `updateColumnCounts()` | Updates task count badges in column headers |
+| `buildMoveButtons()` | Creates mobile fallback move buttons |
+| `addTaskEventListeners()` | Attaches edit/delete/move handlers to task cards |
+| `openModal()` / `closeModal()` | Task add/edit modal management |
+| `handleModalSave()` | Validates input and saves new/edited tasks |
+
+## Responsive Design
+
+- **Desktop (>768px)** — 3-column grid layout with drag-and-drop
+- **Tablet/Mobile (≤768px)** — Single column stack with move buttons visible
+- **Small Mobile (≤480px)** — Smaller header fonts, touch-optimized targets
+
+### Mobile Fallback Strategy
+
+On touch devices, HTML5 drag-and-drop is unreliable. The UI provides "← Move Left" and "Move Right →" buttons that appear on mobile viewports (hidden on desktop via CSS `display: none`).
 
 ## Author
 
-Sauryaman Bisen
-
----
-
-## License
-
-This project is licensed under the MIT License.
+**Member 3 (UI Layer)** — Sauryaman Bisen  
+OJT Capstone Track A — Dev Agency
